@@ -4,18 +4,26 @@ createApp({
     
     data() {
         return {
-            api: "../php-todo-list-json/api.php",
+            api: "./api.php",
+            task: "",
+            todoList:""
         }
     },
     methods: {
-        invocaprincipesse(){
-            axios.get(this.api).then((response) => {
-                console.log(response);
-                console.log(response.data);
-            });
-        }
+      manda(){
+        const data = {task: this.task};
+        axios.post(this.api, data, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }).then((response) => {
+            this.todoList = response.data;
+            this.task = "";
+        });
+      }
     },
     mounted() {
-        console.log("montato") 
+        axios.get(this.api).then((response) => {
+            this.todoList = response.data;
+            this.task = "";
+        });
     }
 }).mount("#app");

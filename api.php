@@ -1,15 +1,17 @@
 <?php
-    $personaggi = [
-        "Alice",
-        "Ariel",
-        "Belle",
-        "Aurora",
-        "Jasmine"
-    ];
-    
     header('Content-Type: application/json');
-    $jsonprincipesse = json_encode($personaggi);
 
-    echo $jsonprincipesse;
+    $todoList = file_get_contents("data.json");
 
+    $todoListData = json_decode($todoList);
+
+    if (isset($_POST['task'])){
+        $todoListData[] = $_POST['task'];
+
+        file_put_contents("data.json", json_encode($todoListData) );
+    }
+
+    $todoListJson = json_encode($todoListData);
+
+    echo $todoListJson;
 ?>
